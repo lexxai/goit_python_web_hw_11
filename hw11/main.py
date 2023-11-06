@@ -42,3 +42,5 @@ def healthchecker(db: Session = Depends(get_db)):
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail="Error connecting to the database",
         )
+    
+app.include_router(contacts.router, prefix="/api")

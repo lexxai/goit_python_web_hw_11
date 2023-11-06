@@ -3,15 +3,14 @@ from pydantic import BaseModel, Field, EmailStr
 
 
 class ContactModel(BaseModel):
-    id: int = Field(1, gt=0)
-    first_name: str = Field("Taras", min_length=1, max_length=25, title="Ім'я")
-    second_name: str = Field("Shechenko", min_length=1, max_length=25, title="Прізвище")
+    first_name: str = Field("", examples=["Taras", "Ostap"], min_length=1, max_length=25, title="Ім'я")
+    second_name: str = Field("", examples=["Shevcheko", "Bulba"], min_length=1, max_length=25, title="Прізвище")
     email: EmailStr
-    phone: str = Field(
-        "", examples=["+380 44 123-4567"], max_length=25, title="Номер телефону"
+    phone: str | None = Field(
+        None, examples=["+380 44 123-4567", "+380 (44) 1234567", "+380441234567"], max_length=25, title="Номер телефону"
     )
-    birthday: date
-    comments: str = Field("", title="Додаткові дані")
+    birthday: date | None = None
+    comments: str | None = Field(default=None, title="Додаткові дані")
     favorite: bool = False
 
 
@@ -22,9 +21,9 @@ class ContactResponse(BaseModel):
     first_name: str
     second_name: str
     email: EmailStr
-    phone: str
-    birthday: date
-    comments: str
+    phone: str | None
+    birthday: date | None
+    comments: str | None
     favorite: bool
     created_at: datetime
     updated_at: datetime

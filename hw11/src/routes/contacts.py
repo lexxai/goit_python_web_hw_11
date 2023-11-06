@@ -5,7 +5,7 @@ from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
 from src.database.db import get_db
-from src.shemas import ContactModel, ContactResponse
+from src.shemas import ContactFavoriteModel, ContactModel, ContactResponse
 from src.repository import contacts as repository_contacts
 
 
@@ -50,6 +50,17 @@ async def update_contact(
     if contact is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Not found")
     return contact
+
+
+@router.patch("/{contact_id}/favorite", response_model=ContactResponse)
+async def favorite_update(
+    body: ContactFavoriteModel, contact_id: int = Path(ge=1), db: Session = Depends(get_db)
+):
+    contact = await repository_contacts.favorite_update(contact_id, body, db)
+    if contact is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Not found")
+    return contact
+
 
 
 @router.delete("/{contact_id}", status_code=status.HTTP_204_NO_CONTENT)

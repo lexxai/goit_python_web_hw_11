@@ -13,6 +13,10 @@ class ContactModel(BaseModel):
     comments: str | None = Field(default=None, title="Додаткові дані")
     favorite: bool = False
 
+class ContactFavoriteModel(BaseModel):
+    favorite: bool = False
+
+
 
     # pattern=r"^+[0-9\s\(\)-]+$
 

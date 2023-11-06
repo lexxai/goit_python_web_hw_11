@@ -8,6 +8,7 @@ async def get_contacts(db: Session):
     contacts = db.query(Contact).all()
     return contacts
 
+
 async def get_contact_by_id(contact_id: int, db: Session):
     contact = db.query(Contact).filter_by(id=contact_id).first()
     return contact
@@ -40,10 +41,17 @@ async def update(contact_id: int, body: ContactModel, db: Session):
     return contact
 
 
+async def favorite_update(contact_id: int, body: ContactModel, db: Session):
+    contact = await get_contact_by_id(contact_id, db)
+    if contact:
+        contact.favorite = body.favorite
+        db.commit()
+    return contact
+
+
 async def delete(contact_id: int, db: Session):
     contact = await get_contact_by_id(contact_id, db)
     if contact:
         db.delete(contact)
         db.commit()
     return contact
-

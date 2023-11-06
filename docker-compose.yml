@@ -1,5 +1,5 @@
 version: "3.8"
-name: hw11
+name: web_hw11
 services:
   pg:
     image: postgres
@@ -14,7 +14,7 @@ services:
     build: ./
     image: lexxai/web_hw11:latest
     ports:
-      - "8000:8000"
+      - "9000:9000"
     env_file:
       - ./.env
     depends_on:

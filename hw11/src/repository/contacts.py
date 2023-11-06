@@ -29,7 +29,13 @@ async def create(body: ContactModel, db: Session):
 async def update(contact_id: int, body: ContactModel, db: Session):
     contact = await get_contact_by_id(contact_id, db)
     if contact:
+        contact.first_name = body.first_name
+        contact.second_name = body.second_name
         contact.email = body.email
+        contact.phone = body.phone
+        contact.birthday = body.birthday
+        contact.comments = body.comments
+        contact.favorite = body.favorite
         db.commit()
     return contact
 

@@ -1,5 +1,5 @@
 @echo off
-PUSHD ..
+PUSHD ..\hw11
 
 alembic init migrations
 

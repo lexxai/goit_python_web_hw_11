@@ -9,9 +9,10 @@ from sqlalchemy.exc import SQLAlchemyError
 
 domain = environ.get("POSTGRES_HOST")
 if not domain:
-    ENV_FILE = Path(__file__).resolve().parent.parent.parent.joinpath(".env")
+    ENV_FILE = Path(__file__).resolve().parent.parent.parent.parent.joinpath(".env")
     load_dotenv(ENV_FILE)
     domain = environ.get("POSTGRES_HOST")
+    # print(f"{ENV_FILE=} {domain=}")
 
 username = environ.get("POSTGRES_USERNAME")
 password = environ.get("POSTGRES_PASSWORD")
@@ -24,6 +25,10 @@ if domain:
     URI = f"postgresql+psycopg2://{username}:{password}@{domain}:{port}/{database}"
 
 SQLALCHEMY_DATABASE_URL = URI
+
+# print(f"{SQLALCHEMY_DATABASE_URL=}")
+
+assert SQLALCHEMY_DATABASE_URL is not None, "SQLALCHEMY_DATABASE_URL UNDEFINED"
 
 engine = create_engine(SQLALCHEMY_DATABASE_URL, echo=True)
 DBSession = sessionmaker(autocommit=False, autoflush=False, bind=engine)

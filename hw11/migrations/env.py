@@ -4,7 +4,7 @@ from sqlalchemy import engine_from_config
 from sqlalchemy import pool
 
 from src.database import models
-from src.database import db
+from src.database.db import SQLALCHEMY_DATABASE_URL
 
 from alembic import context
 
@@ -21,6 +21,7 @@ if config.config_file_name is not None:
 # for 'autogenerate' support
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
+
 target_metadata = models.Base.metadata
 
 # other values from the config, defined by the needs of env.py,
@@ -28,8 +29,8 @@ target_metadata = models.Base.metadata
 # my_important_option = config.get_main_option("my_important_option")
 # ... etc.
 
-config.set_main_option("sqlalchemy.url", db.SQLALCHEMY_DATABASE_URL)
-
+config.set_main_option("sqlalchemy.url", SQLALCHEMY_DATABASE_URL)
+# print("\n\n\n***** sqlalchemy.url:", config.get_main_option("sqlalchemy.url"))
 
 def run_migrations_offline() -> None:
     """Run migrations in 'offline' mode.

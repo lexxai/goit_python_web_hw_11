@@ -46,3 +46,7 @@ Cтворити REST API для зберігання та управління �
 ### PostgreSQL. model Contacts. ORM SQLAlchemy, Alembic
 
 ![pg-table](doc/pg-table-01.png)
+
+### FastAPI CRUD 
+
+![api-crud-01](doc/api-crud-01.png)

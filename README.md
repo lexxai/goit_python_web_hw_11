@@ -40,3 +40,9 @@ Cтворити REST API для зберігання та управління �
 
 ## Виконання 
 
+### Index Templated page
+![Index](doc/index_01.png)
+
+### PostgreSQL. model Contacts. ORM SQLAlchemy, Alembic
+
+![pg-table](doc/pg-table-01.png)

@@ -61,3 +61,40 @@ Cтворити REST API для зберігання та управління �
 #### API повинен мати змогу отримати список контактів з днями народження на найближчі 7 днів.
 
 ![api-search-01](doc/api-search-02.png)
+
+
+## DOCKER
+
+### BUILD
+![api-docker-01](doc//docker-01.png)
+
+DockerHUB: https://hub.docker.com/r/lexxai/web_hw11
+
+### RUN
+
+.env
+```
+POSTGRES_USERNAME=postgres
+POSTGRES_PASSWORD=XXXXXXXX
+POSTGRES_HOST=pg,localhost
+POSTGRES_PORT=5432
+POSTGRES_DATABASE=postgres
+```
+
+```
+docker-compose up -d code
+``` 
+(scripts/docker_run_docker-compose.cmd)
+
+
+![api-docker-01](doc/docker-02.png)
+
+
+
+## OpenAPI DOCS
+
+[openapi.json](doc/openapi.json) - offline
+
+[openapi.json](http://127.0.0.1:9000/openapi.json) - online
+
+[online FastAPI Docs](http://127.0.0.1:9000/docs) - online FastAPI

@@ -24,7 +24,7 @@ RUN pip install -r requirements.txt
 
 CMD ./run.sh 
 
-# CMD bash
+#CMD bash
 
 #CMD ["python", "-u", "src/main.py"]
 

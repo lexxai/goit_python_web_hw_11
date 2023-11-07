@@ -1,11 +1,16 @@
+from datetime import date, timedelta
+
 from sqlalchemy.orm import Session
 
-from src.shemas import ContactResponse, ContactModel
+from src.shemas import ContactModel
 from src.database.models import Contact
 
 
-async def get_contacts(skip: int, limit: int, db: Session):
-    contacts = db.query(Contact).offset(skip).limit(limit).all()
+async def get_contacts(db: Session, skip: int, limit: int, favorite: bool|None = None):
+    query = db.query(Contact)
+    if favorite is not None:
+        query = query.filter_by(favorite=favorite)
+    contacts = query.offset(skip).limit(limit).all()
     return contacts
 
 
@@ -68,5 +73,15 @@ async def search_contacts(param: dict, db: Session):
         query = query.filter(Contact.last_name.ilike(f"%{last_name}%"))   
     if email:
         query = query.filter(Contact.email.ilike(f"%{email}%"))   
+    contacts = query.offset(param.get("skip")).limit(param.get("limit"))
+    return contacts
+
+
+async def search_birthday(param: dict, db: Session):
+    days:int = int(param.get("days", 7)) + 1
+    filter_afetr = date.today()
+    filter_before = date.today() + timedelta(days = days)
+    query = db.query(Contact)
+    query = query.filter(Contact.birthday > filter_afetr, Contact.birthday <= filter_before)
     contacts = query.offset(param.get("skip")).limit(param.get("limit"))
     return contacts

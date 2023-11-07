@@ -40,13 +40,33 @@ async def search_contacts(
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Not found")
     return contacts
 
-@router.get("", response_model=List[ContactResponse])
-async def get_contacts(
+@router.get("/search/birtdays", response_model=List[ContactResponse])
+async def search_contacts(
+    days: int = Query(default=7, le=30, ge=1),
     skip: int = 0,
     limit: int = Query(default=10, le=100, ge=10),
     db: Session = Depends(get_db),
 ):
-    contacts = await repository_contacts.get_contacts(skip=skip, limit=limit, db=db)
+    contacts = None
+    if days:
+        param = {
+            "days": days,
+            "skip": skip,
+            "limit": limit,
+        }
+        contacts = await repository_contacts.search_birthday(param, db)
+    if contacts is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Not found")
+    return contacts
+
+@router.get("", response_model=List[ContactResponse])
+async def get_contacts(
+    skip: int = 0,
+    limit: int = Query(default=10, le=100, ge=10),
+    favorite: bool = None, 
+    db: Session = Depends(get_db),
+):
+    contacts = await repository_contacts.get_contacts(db=db, skip=skip, limit=limit, favorite=favorite)
     return contacts
 
 

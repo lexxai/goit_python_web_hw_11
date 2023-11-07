@@ -3,8 +3,8 @@ from pydantic import BaseModel, Field, EmailStr
 
 
 class ContactModel(BaseModel):
-    first_name: str = Field("", examples=["Taras", "Ostap"], min_length=1, max_length=25, title="Ім'я")
-    second_name: str = Field("", examples=["Shevcheko", "Bulba"], min_length=1, max_length=25, title="Прізвище")
+    first_name: str = Field(default="", examples=["Taras", "Ostap"], min_length=1, max_length=25, title="Ім'я")
+    last_name: str = Field(default="", examples=["Shevcheko", "Bulba"], min_length=1, max_length=25, title="Прізвище")
     email: EmailStr
     phone: str | None = Field(
         None, examples=["+380 44 123-4567", "+380 (44) 1234567", "+380441234567"], max_length=25, title="Номер телефону"
@@ -22,9 +22,9 @@ class ContactFavoriteModel(BaseModel):
 
 class ContactResponse(BaseModel):
     id: int
-    first_name: str
-    second_name: str
-    email: EmailStr
+    first_name: str | None
+    last_name: str | None
+    email: EmailStr | None
     phone: str | None
     birthday: date | None
     comments: str | None
@@ -51,7 +51,7 @@ class ContactResponse(BaseModel):
 
 #     id = Column(Integer, primary_key=True, index=True)
 #     first_name = Column(String)
-#     second_name = Column(String)
+#     last_name = Column(String)
 #     email = Column(String)
 #     phone = Column(String)
 #     birthday = Column(Date)
